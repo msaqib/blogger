@@ -51,7 +51,7 @@ async function displayBlog(id) {
   if(!blogs || !tags) {
     await fetchData()
   }
-  main.innerHTML = `<div id="blog-content"><img src="/assets/cover${blogs[id].cover}.jpeg"><h2>${blogs[id].title}</h2><p>${blogs[id].text}</p><button id="back">Back to blogs</button></div>`
+  main.innerHTML = `<div id="blog-content"><img src="/assets/cover${blogs[id].cover}.jpeg"><h2>${blogs[id].title}</h2><p>Date: ${blogs[id].date}</p><p>${blogs[id].text}</p><button id="back">Back to blogs</button></div>`
   document.getElementById('back').addEventListener('click', () => navigateTo('/'))
 }
 
@@ -67,19 +67,33 @@ async function fetchData() {
 async function displayHomePage() {
   createTopLevel()
   await fetchData()
-  const prev = document.querySelector('.blog-previews')
-  blogs.forEach(blog => {
-    const blogElement = createBlogPreview(blog)
-    prev.appendChild(blogElement)
-  })
+  displayBlogPreviews(blogs)
 
   const tagsDiv = document.getElementById('tags')
   for (let tag of tags) {
     const d = document.createElement('div')
     d.innerText = tag.tag
     d.setAttribute('data-id', tag.id)
+    d.style.cursor = 'pointer'
+    d.addEventListener('click', (event) => {
+      const targetId = event.target.getAttribute('data-id')
+      const filteredBlogs = blogs.filter(blog => {
+        const index = blog.tags.findIndex(id => id == targetId)
+        return index !== -1
+      })
+      displayBlogPreviews(filteredBlogs)
+    })
     tagsDiv.appendChild(d)
   }
+}
+
+function displayBlogPreviews(blogs) {
+  const prev = document.querySelector('.blog-previews')
+  prev.innerHTML = ''
+  blogs.forEach(blog => {
+    const blogElement = createBlogPreview(blog)
+    prev.appendChild(blogElement)
+  })
 }
 
 function createBlogPreview(data) {

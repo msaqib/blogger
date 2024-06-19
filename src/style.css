@@ -109,22 +109,23 @@ h2 {
     display: flex;
     gap: 40px;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     margin-bottom: 40px;
     flex: 3;
+    align-items: stretch;
 }
 
 .blog-preview {
     box-shadow: #999999 0 0 2px 2px;
     border-radius: 5px;
-    width: 297px;
     padding: 10px;
-    position: relative;
     padding-bottom: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     position: relative;
+    flex: 0 1 45%;
 }
 
 .blog-preview img {
@@ -161,6 +162,7 @@ h2 {
 
 .articles {
     display: flex;
+    align-items: flex-start;
 }
 
 #tags {
@@ -194,6 +196,7 @@ h2 {
 }
 
 #blog-content p {
+    margin-top: 10px;
     text-align: justify;
 }
 
@@ -201,4 +204,9 @@ h2 {
     width: fit-content;
     margin: 10px auto;
     padding: 6px;
+}
+
+#blog-content img {
+    max-width: 200px;
+    margin: 10px auto;
 }
